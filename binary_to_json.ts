@@ -8,4 +8,13 @@ export class BinaryToJSON {
 	}
 	this.buffer = buffer;
     }
+
+    convert(formatFilePath: string):{} {
+	const format = JSON.parse(Deno.readTextFileSync(formatFilePath));
+	return this.bufferToJSON(format);
+    }
+
+    private bufferToJSON(format:{}):{} {
+	return {};
+    }
 }
