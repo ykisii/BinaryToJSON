@@ -1,12 +1,12 @@
 [
   {"state":"1"},
-  {"reserve1":"7"},
-  {"date_process":"4"},
-  {"reserve2":"4"},
-  {"reserve3":"496"},
+  {"state_info":"7"},
+  {"date":"4"},
+  {"reserve":"4"},
+  {"reserve":"496"},
   [
-    {"footer_info":"16"},
-    {"event_id":"6"},
-    {"camera":"1"}
+    {"map_info":"16"},
+    {"loc_id":"6"},
+    {"kind":"1"}
   ]
 ]
