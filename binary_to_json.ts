@@ -7,43 +7,49 @@ export class BinaryToJSON {
         return this.bufferToJSON(buf, format);
     }
 
-    private bufferToJSON(buf: Uint8Array, format:{}):{} {
+    private bufferToJSON(buf: Uint8Array, formats:[]):{} {
+        // needs array. when read binary sequentially.
+        if (Array.isArray(formats) === false) return {};
+
         const br = new BinaryReader(buf);
         const output: Object = {};
-        for (const [k, v] of Object.entries(format)) {
-            //console.log(k, v);
-            this.generateObject(br, v, output);
+
+        for (const format of formats) {
+            this.generateObject(br, format, output);
         }
-        return {};
+        return output;
     }
 
-    private generateObject(br: BinaryReader, v: any , out: {}): {} {
-	    if (Array.isArray(v)) {
+    private generateObject(br: BinaryReader, format:{} , out: {}): {} {
+        let obj: {} = {};
+	    if (Array.isArray(format)) {
+            console.log("array ....");
     	    //gnerateObject(br, k, v, out);
         }
         else {
-            let value = Object.entries(v)[0];
-            console.log((typeof v));	    
-            //console.log(">" + value);
-            this.readBytes(br, value);
+            const [key, val] = Object.entries(format)[0];
+            console.log(key, val);
+            if (key === "reserve") {
+                // just increase offset.
+                this.readBytes(br, Number(val)); 
+                return {};
+            }
+            let value: number = this.readBytes(br, Number(val));
+            console.log(value.toString(16));
         }
-        return {};	
+        return obj;
     }
 
-    private readBytes(br: BinaryReader, v: any): number {
-        let test = Object.entries(v)[0];
-        console.log("test> " + test);
-        const length  = Number(v);
+    private readBytes(br: BinaryReader, length: number): number {
         const bytes: Uint8Array = br.readBytes(length);
         let shift: number = 0x00;
-        console.log(length, bytes);
+        
         let val: number = bytes.reduce((acc: number, val: number): number => {
-            let ret = acc | (val << shift);
-            shift += 0x08;
-            console.log(ret);
-            return ret;
+            let ret = (acc << shift) | val;
+            shift = 0x08;
+            return ret
         }, 0);
 
-        return 0;
+        return val;
     }
 }
