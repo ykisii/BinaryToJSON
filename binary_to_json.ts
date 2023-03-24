@@ -14,27 +14,27 @@ export class BinaryToJSON {
     const output = {};
 
     for (const format of formats) {
-        this.generateObject(br, format, output);
+      this.generateObject(br, format, output);
     }
     return output;
   }
 
   private generateObject(br: BinaryReader, format:{} , out: {}): {} {
     let obj = {};
-  if (Array.isArray(format)) {
-        console.log("array ....");
-        //gnerateObject(br, k, v, out);
+    if (Array.isArray(format)) {
+      console.log("array ....");
+      //gnerateObject(br, k, v, out);
     }
     else {
-        const [key, val] = Object.entries(format)[0];
-        console.log(key, val);
-        if (key === "reserve") {
-            // just increase offset.
-            br.readBytes(Number(val));
-            return {};
-        }
-        let value: number = this.readBytes(br, Number(val));
-        console.log(value.toString(16));
+      const [key, val] = Object.entries(format)[0];
+      console.log(key, val);
+      if (key === "reserve") {
+        // just increase offset.
+        br.readBytes(Number(val));
+        return {};
+      }
+      let value: number = this.readBytes(br, Number(val));
+      console.log(value.toString(16));
     }
     return obj;
   }
