@@ -2,8 +2,7 @@ import { BinaryReader } from "https://deno.land/x/binary_reader@v0.1.6/mod.ts";
 
 export class BinaryToJSON {
 
-    convert(buf:Uint8Array, formatFilePath: string):{} {
-        const format = JSON.parse(Deno.readTextFileSync(formatFilePath));
+    convert(buf: Uint8Array, format: []) : {} {
         return this.bufferToJSON(buf, format);
     }
 
@@ -12,7 +11,7 @@ export class BinaryToJSON {
         if (Array.isArray(formats) === false) return {};
 
         const br = new BinaryReader(buf);
-        const output: Object = {};
+        const output = {};
 
         for (const format of formats) {
             this.generateObject(br, format, output);
@@ -21,7 +20,7 @@ export class BinaryToJSON {
     }
 
     private generateObject(br: BinaryReader, format:{} , out: {}): {} {
-        let obj: {} = {};
+        let obj = {};
 	    if (Array.isArray(format)) {
             console.log("array ....");
     	    //gnerateObject(br, k, v, out);
@@ -31,7 +30,7 @@ export class BinaryToJSON {
             console.log(key, val);
             if (key === "reserve") {
                 // just increase offset.
-                this.readBytes(br, Number(val)); 
+                br.readBytes(Number(val));
                 return {};
             }
             let value: number = this.readBytes(br, Number(val));
@@ -41,8 +40,8 @@ export class BinaryToJSON {
     }
 
     private readBytes(br: BinaryReader, length: number): number {
-        const bytes: Uint8Array = br.readBytes(length);
-        let shift: number = 0x00;
+        const bytes = br.readBytes(length);
+        let shift = 0x00;
         
         let val: number = bytes.reduce((acc: number, val: number): number => {
             let ret = (acc << shift) | val;
