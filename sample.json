@@ -1,12 +1,10 @@
 [
   {"state":"1"},
-  {"reserve":"7"},
-  {"date":"4"},
-  {"reserve":"4"},
-  {"reserve":"496"},
-  [
-    {"map_info":"16"},
-    {"loc_id":"6"},
-    {"kind":"1"}
-  ]
+  {"__reserve":"4"},
+  {"id":"4"},
+  {"__reserve":"4"},
+  {"__arrysize":"4"},  
+  {"type":"1"},
+  {"main_value":"3"},
+  {"sub_value":"2"}
 ]
