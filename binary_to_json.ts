@@ -1,5 +1,9 @@
 import { BinaryReader } from "https://deno.land/x/binary_reader@v0.1.6/mod.ts";
 
+interface Obj {
+  [prop: string]: any;
+}
+
 export class BinaryToJSON {
 
   convert(buf: Uint8Array, format: []) : {} {
@@ -11,12 +15,14 @@ export class BinaryToJSON {
     if (Array.isArray(formats) === false) return {};
 
     const br = new BinaryReader(buf);
-    const output = {};
+    const output: Obj = {};
 
     for (const format of formats) {
       const obj = this.generateObject(br, format);
-      if (Object.keys(obj).length > 0)
-        console.log(obj);
+      if (Object.keys(obj).length > 0) {
+        const data: Obj = Object.entries(obj)[0];
+        output[data[0]] = data[1];
+      }
     }
     return output;
   }

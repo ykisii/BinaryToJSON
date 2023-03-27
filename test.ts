@@ -2,7 +2,7 @@ import { assertEquals, assertNotEquals } from "https://deno.land/std/testing/ass
 import { BinaryToJSON } from "./binary_to_json.ts";
 
 Deno.test(
-  "constructor()",
+  "constructor",
   function(): void {
     const buffer = new ArrayBuffer(4);
     const arry = new Uint8Array(buffer);
@@ -16,13 +16,16 @@ Deno.test(
 );
 
 Deno.test(
-  "convert test1",
+  "convert",
   function():void {
     const file = Deno.openSync("sample.dat");
     const buffer = Deno.readAllSync(file);
     Deno.close(file.rid);
     const format = JSON.parse(Deno.readTextFileSync("sample.json"));
     const b2j = new BinaryToJSON();
-    assertEquals({}, b2j.convert(buffer, format));
+    const data: any = b2j.convert(buffer, format);
+    assertEquals(10,  data['state']);
+    assertEquals(2,  data['type']);
+    assertEquals(2320,  data['sub_value']);
   },
 );
