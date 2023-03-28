@@ -22,37 +22,46 @@ export class BinaryToJSON {
     for (const format of formats) {
       const [key, val] = Object.entries(format)[0];
       if (Array.isArray(val)) {
-        for (let i = 0; i < this.#array_size; i++) {
-          array.push(this.bufferToJSON(buf, format[key]));
-        }
-        //console.log(array);
+        this.setObjects(buf, output, array, format[key]);
         output[key] = array;
       }
       else {
         const value = this.getValue(br, format);
-        output[key] = value;
+        if (value) output[key] = value;
       }
     }
     return output;
   }
 
+  private setObjects(buf: Uint8Array, 
+                  output: Obj, 
+               dataArray: object[], 
+                 formats: []) 
+  {
+    for (let i = 0; i < this.#array_size; i++) {
+      const obj = this.bufferToJSON(buf, formats);
+      if (Object.keys(obj).length > 0) {
+        dataArray.push(obj);
+      }
+    }
+  }
+
   private getValue(br: BinaryReader, format:{}) : number | null {
-      const [key, val] = Object.entries(format)[0];
-      //if (Array.isArray(val)) return {[key]:val};
+    const [key, val] = Object.entries(format)[0];
 
-      if (key === "__reserve") {
-        // just increase offset.
-        br.readBytes(Number(val));
-        return null;
-      }
+    if (key === "__reserve") {
+      // just increase offset.
+      br.readBytes(Number(val));
+      return null;
+    }
 
-      let value: number = this.readBytes(br, Number(val));
+    let value: number = this.readBytes(br, Number(val));
 
-      if (key === "__repeat") {
-        this.#array_size = value;
-      }
+    if (key === "__repeat") {
+      this.#array_size = value;
+    }
 
-      return value;//{[key]:value};
+    return value;
   }
 
   private readBytes(br: BinaryReader, length: number): number {
