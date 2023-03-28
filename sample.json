@@ -3,8 +3,10 @@
   {"__reserve":"4"},
   {"id":"4"},
   {"__reserve":"4"},
-  {"__arrysize":"4"},  
-  {"type":"1"},
-  {"main_value":"3"},
-  {"sub_value":"2"}
+  {"__repeat":"2"},
+  {"infos": [
+    {"type":"1"},
+    {"main_value":"3"},
+    {"sub_value":"2"}
+  ]}
 ]

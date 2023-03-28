@@ -5,37 +5,54 @@ interface Obj {
 }
 
 export class BinaryToJSON {
+  #array_size: number = 0
 
-  convert(buf: Uint8Array, format: []) : {} {
+  convert(buf: Uint8Array, format: []): {} {
     return this.bufferToJSON(buf, format);
   }
 
-  private bufferToJSON(buf: Uint8Array, formats:[]):{} {
+  private bufferToJSON(buf: Uint8Array, formats:[]): {} {
     // needs array. when read binary sequentially.
     if (Array.isArray(formats) === false) return {};
 
     const br = new BinaryReader(buf);
     const output: Obj = {};
+    const array: object[] = []; 
 
     for (const format of formats) {
-      const obj = this.generateObject(br, format);
-      if (Object.keys(obj).length > 0) {
-        const data: Obj = Object.entries(obj)[0];
-        output[data[0]] = data[1];
+      const [key, val] = Object.entries(format)[0];
+      if (Array.isArray(val)) {
+        for (let i = 0; i < this.#array_size; i++) {
+          array.push(this.bufferToJSON(buf, format[key]));
+        }
+        //console.log(array);
+        output[key] = array;
+      }
+      else {
+        const value = this.getValue(br, format);
+        output[key] = value;
       }
     }
     return output;
   }
 
-  private generateObject(br: BinaryReader, format:{}) : {} {
+  private getValue(br: BinaryReader, format:{}) : number | null {
       const [key, val] = Object.entries(format)[0];
+      //if (Array.isArray(val)) return {[key]:val};
+
       if (key === "__reserve") {
         // just increase offset.
         br.readBytes(Number(val));
-        return {};
+        return null;
       }
+
       let value: number = this.readBytes(br, Number(val));
-      return {[key]:value};
+
+      if (key === "__repeat") {
+        this.#array_size = value;
+      }
+
+      return value;//{[key]:value};
   }
 
   private readBytes(br: BinaryReader, length: number): number {
