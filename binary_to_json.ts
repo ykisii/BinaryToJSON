@@ -8,21 +8,21 @@ export class BinaryToJSON {
   #array_size: number = 0
 
   convert(buf: Uint8Array, format: []): {} {
-    return this.bufferToJSON(buf, format);
+    const br = new BinaryReader(buf);
+    return this.bufferToJSON(br, buf, format);
   }
 
-  private bufferToJSON(buf: Uint8Array, formats:[]): {} {
+  private bufferToJSON(br: BinaryReader, buf: Uint8Array, formats:any[]): {} {
     // needs array. when read binary sequentially.
     if (Array.isArray(formats) === false) return {};
-
-    const br = new BinaryReader(buf);
+    
     const output: Obj = {};
     const array: object[] = []; 
 
     for (const format of formats) {
       const [key, val] = Object.entries(format)[0];
       if (Array.isArray(val)) {
-        this.setObjects(buf, output, array, format[key]);
+        this.setObjects(br, buf, output, array, val);
         output[key] = array;
       }
       else {
@@ -33,13 +33,15 @@ export class BinaryToJSON {
     return output;
   }
 
-  private setObjects(buf: Uint8Array, 
-                  output: Obj, 
-               dataArray: object[], 
-                 formats: []) 
+  private setObjects(br: BinaryReader,
+                    buf: Uint8Array, 
+                 output: Obj, 
+              dataArray: object[], 
+                formats: any[]) 
   {
     for (let i = 0; i < this.#array_size; i++) {
-      const obj = this.bufferToJSON(buf, formats);
+      const obj = this.bufferToJSON(br, buf, formats);
+      //console.log(i, this.#array_size, formats, obj);
       if (Object.keys(obj).length > 0) {
         dataArray.push(obj);
       }
@@ -48,7 +50,7 @@ export class BinaryToJSON {
 
   private getValue(br: BinaryReader, format:{}) : number | null {
     const [key, val] = Object.entries(format)[0];
-
+    console.log(key, val);
     if (key === "__reserve") {
       // just increase offset.
       br.readBytes(Number(val));
@@ -56,7 +58,7 @@ export class BinaryToJSON {
     }
 
     let value: number = this.readBytes(br, Number(val));
-
+    console.log(br.position);
     if (key === "__repeat") {
       this.#array_size = value;
     }
