@@ -62,10 +62,7 @@ export class BinaryToJSON {
 
     if (/^__repeat/.test(key)) {
       this.#array_size = value;
-      //if (key === "__repeat") {
-        //this.#array_size = value;
-        //return null;
-      //}
+      if (key === "__repeat") return null;
     }
     return value;
   }
