@@ -52,7 +52,6 @@ export class BinaryToJSON {
 
   private getValue(br: BinaryReader, format:{}) : number | null {
     const [key, val] = Object.entries(format)[0];
-    console.log(key, val);
     if (key === "__reserve") {
       // just increase offset.
       br.readBytes(Number(val));
@@ -60,7 +59,6 @@ export class BinaryToJSON {
     }
 
     let value: number = this.readBytes(br, Number(val));
-    console.log(br.position, /^__repeat/.test(key));
 
     if (/^__repeat/.test(key)) {
       this.#array_size = value;
