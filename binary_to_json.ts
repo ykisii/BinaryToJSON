@@ -5,10 +5,13 @@ interface Obj {
 }
 
 export class BinaryToJSON {
-  #array_size: number = 0
+  #array_size:number = 0;
+  #littlEndian: boolean = false;
 
-  convert(buf: Uint8Array, format: []): {} {
+  convert(buf: Uint8Array, format: any[], littleEndian?: boolean): {} {
     const br = new BinaryReader(buf);
+    this.#littlEndian = littleEndian ?? false;
+
     return this.bufferToJSON(br, buf, format);
   }
 
@@ -70,11 +73,17 @@ export class BinaryToJSON {
   private readBytes(br: BinaryReader, length: number): number {
     const bytes = br.readBytes(length);
     let shift = 0x00;
-      
-    let val: number = bytes.reduce((acc: number, val: number): number => {
-      let ret = (acc << shift) | val;
-      shift = 0x08;
-      return ret
+    let val = bytes.reduce((acc: number, val: number): number => {
+      let ret = 0;
+      if (this.#littlEndian) {
+        ret = acc | (val << shift)
+        shift += 0x08;
+      }
+      else {
+        ret = (acc << shift) | val;
+        shift = 0x08;
+      }
+      return ret;
     }, 0);
 
     return val;
