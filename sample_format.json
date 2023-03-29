@@ -1,18 +1,18 @@
 [
-  {"state":"1"},
-  {"__reserve":"4"},
-  {"id":"4"},
-  {"__reserve":"4"},
-  {"__repeat":"2"},
+  {"state":1},
+  {"__reserve":4},
+  {"id":4},
+  {"__reserve":4},
+  {"__repeat":2},
   {"infos": [
-    {"type":"1"},
-    {"main_value":"3"},
-    {"sub_value":"2"}
+    {"type":1},
+    {"main_value":3},
+    {"sub_value":2}
   ]},
-  {"__repeat/num_data":"1"},  
+  {"__repeat/num_data":1},  
   {"dat": [
-    {"type":"1"},
-    {"x":"1"},
-    {"y":"1"}
+    {"type":1},
+    {"x":1},
+    {"y":1}
   ]}
 ]

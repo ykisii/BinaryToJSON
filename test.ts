@@ -24,6 +24,7 @@ Deno.test(
     const format = JSON.parse(Deno.readTextFileSync("sample_format.json"));
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(buffer, format);
+    console.log(data);
     assertEquals(0x0A,  data['state']);
     assertEquals(0x07,  data['infos'][0]['type']);
     assertEquals(0x00,  data['dat'][0]['type']);
