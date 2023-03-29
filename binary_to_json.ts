@@ -23,11 +23,13 @@ export class BinaryToJSON {
       const [key, val] = Object.entries(format)[0];
       if (Array.isArray(val)) {
         this.setObjects(br, buf, output, array, val);
-        output[key] = array;
+        output[key] = structuredClone(array);
+        this.#array_size = 0;
+        array.splice(0);
       }
       else {
         const value = this.getValue(br, format);
-        if (value) output[key] = value;
+        if (value !== null) output[key] = value;
       }
     }
     return output;
@@ -58,11 +60,15 @@ export class BinaryToJSON {
     }
 
     let value: number = this.readBytes(br, Number(val));
-    console.log(br.position);
-    if (key === "__repeat") {
-      this.#array_size = value;
-    }
+    console.log(br.position, /^__repeat/.test(key));
 
+    if (/^__repeat/.test(key)) {
+      this.#array_size = value;
+      //if (key === "__repeat") {
+        //this.#array_size = value;
+        //return null;
+      //}
+    }
     return value;
   }
 
