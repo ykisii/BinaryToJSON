@@ -1,5 +1,5 @@
 import { assertEquals, assertNotEquals } from "https://deno.land/std/testing/asserts.ts";
-import { BinaryToJSON } from "./binary_to_json.ts";
+import { BinaryToJSON } from "https://deno.land/x/binary_to_json@v0.1.0/mod.ts";
 
 Deno.test(
   "constructor",
