@@ -56,8 +56,7 @@ export class BinaryToJSON {
   private getValue(br: BinaryReader, format:{}) : number | null {
     const [key, val] = Object.entries(format)[0];
     if (key === "__reserve") {
-      // just increase offset.
-      br.readBytes(Number(val));
+      br.seek(br.position + Number(val));
       return null;
     }
 
