@@ -1,5 +1,7 @@
 # BinaryToJSON
-A Deno module helper class that convert binary array buffer to JSON format.
+[![Deno Doc](https://doc.deno.land/badge.svg)](https://deno.land/x/binary_to_json@v0.1.0/mod.ts)
+
+A Deno 🦕 module helper class that convert binary array buffer to JSON format.
 Binary interpretation is defined by JSON.
 
 This module depends on https://deno.land/x/binary_reader@v0.1.6/mod.ts .
