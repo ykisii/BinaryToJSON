@@ -1,5 +1,6 @@
 import { assertEquals, assertNotEquals } from "https://deno.land/std/testing/asserts.ts";
-import { BinaryToJSON } from "https://deno.land/x/binary_to_json@v0.1.0/mod.ts";
+//import { BinaryToJSON } from "https://deno.land/x/binary_to_json@v0.1.0/mod.ts";
+import { BinaryToJSON } from "./binary_to_json.ts";
 
 Deno.test(
   "constructor",
@@ -26,8 +27,23 @@ Deno.test(
     const data: any = b2j.convert(buffer, format);
     console.log(data);
     assertEquals(0x0A,  data['state']);
-    assertEquals(0x07,  data['infos'][0]['type']);
+    assertEquals(0x01,  data['infos'][0]['type']);
     assertEquals(0x00,  data['dat'][0]['type']);
+  },
+);
+
+Deno.test(
+  "convert repeat",
+  function():void {
+    const file = Deno.openSync("sample2.dat");
+    const buffer = Deno.readAllSync(file);
+    Deno.close(file.rid);
+    const format = JSON.parse(Deno.readTextFileSync("sample_format2.json"));
+    const b2j = new BinaryToJSON();
+    const data: any = b2j.convert(buffer, format);
+    console.log(data);
+    assertEquals(0x01,  data['dat1'][0]['v']);
+    assertEquals(0x01,  data['dat2'][0]['v']);
   },
 );
 

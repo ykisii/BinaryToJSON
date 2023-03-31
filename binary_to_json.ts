@@ -21,7 +21,6 @@ export class BinaryToJSON {
     
     const output: Obj = {};
     const array: object[] = []; 
-
     for (const format of formats) {
       const [key, val] = Object.entries(format)[0];
       if (Array.isArray(val)) {
@@ -59,13 +58,17 @@ export class BinaryToJSON {
       br.seek(br.position + Number(val));
       return null;
     }
-
+    if (key == "__repeat") {
+      this.#array_size = Number(val);
+      return null;
+    }
+    
     let value: number = this.readBytes(br, Number(val));
 
     if (/^__repeat/.test(key)) {
       this.#array_size = value;
-      if (key === "__repeat") return null;
     }
+    
     return value;
   }
 
