@@ -16,7 +16,7 @@ arry[0] = 0x0A;
 arry[1] = 0x0B;
 arry[2] = 0x0C;
 arry[3] = 0x0D;
-const format = [{"dat": 4}];
+const format = [{"dat": 4}];　// Max size, can be specified is 4.
 const b2j = new BinaryToJSON();
 const data: any = b2j.convert(arry, format); // default endian is big
 
