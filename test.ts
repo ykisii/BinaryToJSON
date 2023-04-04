@@ -2,6 +2,7 @@ import { assertEquals, assertNotEquals } from "https://deno.land/std/testing/ass
 //import { BinaryToJSON } from "https://deno.land/x/binary_to_json@v0.1.0/mod.ts";
 import { BinaryToJSON } from "./binary_to_json.ts";
 
+
 Deno.test(
   "constructor",
   function(): void {
@@ -78,5 +79,17 @@ Deno.test(
     const data: any = b2j.convert(arry, format);
     console.log(data);
     assertEquals(0x00010203, data['dat']);
+  },
+);
+
+Deno.test(
+  "convert array null",
+  function(): void {
+    const arry = new Uint8Array();
+    const format = [{"dat":4}];
+    const b2j = new BinaryToJSON();
+    const data: any = b2j.convert(arry, format);
+    console.log(data);
+    assertEquals({}, data);
   },
 );

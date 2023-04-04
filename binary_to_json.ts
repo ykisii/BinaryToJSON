@@ -17,7 +17,10 @@ export class BinaryToJSON {
 
   private bufferToJSON(br: BinaryReader, buf: Uint8Array, formats:any[]): {} {
     // needs array. when read binary sequentially.
-    if (Array.isArray(formats) === false) return {};
+    if (Array.isArray(formats) === false ||
+        buf.length === 0) {
+          return {};
+    }
     
     const output: Obj = {};
     const array: object[] = []; 
