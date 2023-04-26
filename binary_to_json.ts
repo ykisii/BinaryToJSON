@@ -76,9 +76,16 @@ export class BinaryToJSON {
   }
 
   private readBytes(br: BinaryReader, length: number): number {
+    const surplusLength = length >= 4 ? length - 4 : 0;
     const bytes = br.readBytes(length);
     let shift = 0x00;
-    let val = bytes.reduce((acc: number, val: number): number => {
+    let val = this.convolutionBytes(bytes);
+    return val;
+  }
+
+  private convolutionBytes(bytes: any): number {
+    let shift = 0;
+    return bytes.reduce((acc: number, val: number): number => {
       let ret = 0;
       if (this.#littlEndian) {
         ret = acc | (val << shift)
@@ -90,7 +97,5 @@ export class BinaryToJSON {
       }
       return ret;
     }, 0);
-
-    return val;
   }
 }
