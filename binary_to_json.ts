@@ -77,9 +77,14 @@ export class BinaryToJSON {
 
   private readBytes(br: BinaryReader, length: number): number {
     const surplusLength = length >= 4 ? length - 4 : 0;
-    const bytes = br.readBytes(length);
-    let shift = 0x00;
+    const bytes = br.readBytes(length - surplusLength);
     let val = this.convolutionBytes(bytes);
+    if (surplusLength > 0) {
+      for (let i = 0; i < surplusLength*2; i++) {
+        val *= 16;
+      }
+      val += this.convolutionBytes(br.readBytes(surplusLength));
+    }
     return val;
   }
 
