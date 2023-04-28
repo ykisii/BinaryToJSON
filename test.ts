@@ -93,3 +93,42 @@ Deno.test(
     assertEquals({}, data);
   },
 );
+
+Deno.test(
+  "read 5bytes",
+  function(): void {
+    const buffer = new ArrayBuffer(5);
+    const arry = new Uint8Array(buffer);
+    arry[0] = 0x00;
+    arry[1] = 0x01;
+    arry[2] = 0x02;
+    arry[3] = 0x03;
+    arry[4] = 0x04;
+    const format = [{"dat":5}];
+    const b2j = new BinaryToJSON();
+    const data: any = b2j.convert(arry, format);
+    console.log(data);
+    assertEquals(0x0001020304, data['dat']);
+  },
+);
+
+Deno.test(
+  "read 8bytes",
+  function(): void {
+    const buffer = new ArrayBuffer(8);
+    const arry = new Uint8Array(buffer);
+    arry[0] = 0x00;
+    arry[1] = 0x01;
+    arry[2] = 0x02;
+    arry[3] = 0x03;
+    arry[4] = 0x04;
+    arry[5] = 0x05;
+    arry[6] = 0x06;
+    arry[7] = 0x07;
+    const format = [{"dat":8}];
+    const b2j = new BinaryToJSON();
+    const data: any = b2j.convert(arry, format);
+    console.log(data);
+    assertEquals(0x0001020304050607, data['dat']);
+  },
+);
