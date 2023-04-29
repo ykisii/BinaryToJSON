@@ -27,7 +27,7 @@ export class BinaryToJSON {
     for (const format of formats) {
       const [key, val] = Object.entries(format)[0];
       if (Array.isArray(val)) {
-        this.setObjects(br, buf, output, array, val);
+        this.setObjects(br, buf, array, val);
         output[key] = structuredClone(array);
         this.#array_size = 0;
         array.splice(0);
@@ -42,7 +42,6 @@ export class BinaryToJSON {
 
   private setObjects(br: BinaryReader,
                     buf: Uint8Array, 
-                 output: Obj, 
               dataArray: object[], 
                 formats: any[]) 
   {
