@@ -81,6 +81,7 @@ export class BinaryToJSON {
     let val = this.convolutionBytes(bytes);
     if (surplusLength > 0) {
       for (let i = 0; i < surplusLength*2; i++) {
+        // bit shift
         val *= 16;
       }
       val += this.convolutionBytes(br.readBytes(surplusLength));
