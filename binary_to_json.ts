@@ -43,7 +43,7 @@ export class BinaryToJSON {
   private setObjects(br: BinaryReader,
                     buf: Uint8Array, 
               dataArray: object[], 
-                formats: any[]) 
+                formats: unknown[]) 
   {
     for (let i = 0; i < this.#array_size; i++) {
       const obj = this.bufferToJSON(br, buf, formats);
