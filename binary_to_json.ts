@@ -46,12 +46,7 @@ export class BinaryToJSON {
     }
     return output;
   }
-/*
-  private setObjects(br: BinaryReader,
-                    buf: Uint8Array, 
-              dataArray: object[], 
-                formats: any[]) 
-*/
+
   private setObjects(param: SetParam)
   {
     for (let i = 0; i < this.#array_size; i++) {
