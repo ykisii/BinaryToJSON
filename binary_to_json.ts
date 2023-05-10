@@ -4,6 +4,13 @@ type Obj = {
   [prop: string]: any;
 }
 
+type SetParam = {
+  br: BinaryReader,
+  buf: Uint8Array,
+  dataArray: object[],
+  formats: any[]
+}
+
 export class BinaryToJSON {
   #array_size:number = 0;
   #littlEndian: boolean = false;
@@ -27,7 +34,7 @@ export class BinaryToJSON {
     for (const format of formats) {
       const [key, val] = Object.entries(format)[0];
       if (Array.isArray(val)) {
-        this.setObjects(br, buf, array, val);
+        this.setObjects({br:br, buf:buf, dataArray:array, formats:val});
         output[key] = structuredClone(array);
         this.#array_size = 0;
         array.splice(0);
@@ -39,17 +46,19 @@ export class BinaryToJSON {
     }
     return output;
   }
-
+/*
   private setObjects(br: BinaryReader,
                     buf: Uint8Array, 
               dataArray: object[], 
                 formats: any[]) 
+*/
+  private setObjects(param: SetParam)
   {
     for (let i = 0; i < this.#array_size; i++) {
-      const obj = this.bufferToJSON(br, buf, formats);
+      const obj = this.bufferToJSON(param.br, param.buf, param.formats);
       //console.log(i, this.#array_size, formats, obj);
       if (Object.keys(obj).length > 0) {
-        dataArray.push(obj);
+        param.dataArray.push(obj);
       }
     }
   }
