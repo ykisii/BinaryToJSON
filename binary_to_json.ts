@@ -44,14 +44,13 @@ export class BinaryToJSON {
       }
       else {
         const value = this.getValue(br, format);
-        if (value === null) {
-          return output;
-        }
-        if (this.#outputFormat === 10) {
-          output[key] = value;
-        }
-        else {
-          output[key] = value.toString(this.#outputFormat);
+        if (value !== null) {
+          if (this.#outputFormat === 10) {
+            output[key] = value;
+          }
+          else {
+            output[key] = value.toString(this.#outputFormat);
+          }
         }
       }
     }
