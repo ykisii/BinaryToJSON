@@ -14,12 +14,10 @@ type SetParam = {
 export class BinaryToJSON {
   #array_size:number = 0;
   #littlEndian: boolean = false;
-  #outputFormat: number = 10;
 
-  convert(buf: Uint8Array, format: any[], littleEndian?: boolean, outputFormat?: number): {} {
+  convert(buf: Uint8Array, format: any[], littleEndian?: boolean): {} {
     const br = new BinaryReader(buf);
     this.#littlEndian = littleEndian ?? this.#littlEndian;
-    this.#outputFormat = outputFormat ?? this.#outputFormat;
     this.#array_size = 0;
 
     return this.bufferToJSON(br, buf, format);
@@ -45,12 +43,7 @@ export class BinaryToJSON {
       else {
         const value = this.getValue(br, format);
         if (value !== null) {
-          if (this.#outputFormat === 10) {
-            output[key] = value;
-          }
-          else {
-            output[key] = value.toString(this.#outputFormat);
-          }
+          output[key] = value;
         }
       }
     }
