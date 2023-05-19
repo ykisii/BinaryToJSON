@@ -61,7 +61,7 @@ export class BinaryToJSON {
     }
   }
 
-  private getValue(br: BinaryReader, format:{}) : number | null {
+  private getValue(br: BinaryReader, format:{}) : number | null | string {
     const [key, val] = Object.entries(format)[0];
     if (key === "__reserve") {
       br.seek(br.position + Number(val));
@@ -70,6 +70,9 @@ export class BinaryToJSON {
     if (key == "__repeat") {
       this.#array_size = Number(val);
       return null;
+    }
+    if (/^__string/.test(key)) {
+      return this.getString(br, Number(val));
     }
     
     let value: number = this.readBytes(br, Number(val));
@@ -93,6 +96,10 @@ export class BinaryToJSON {
       val += this.convolutionBytes(br.readBytes(surplusLength));
     }
     return val;
+  }
+
+  private getString(br: BinaryReader, length: number): string {
+    return "hoge";
   }
 
   private convolutionBytes(bytes: any): number {
