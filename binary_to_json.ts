@@ -101,9 +101,16 @@ export class BinaryToJSON {
   private getString(br: BinaryReader, length: number): string {
     let ret: string = "";
     for (let i = 0; i < length; i++) {
-
-      const v = String.fromCharCode(br.readBytes(1)[0]);
-      ret += v;
+      const value = br.readBytes(1)[0];
+      let char = '';
+      // support ascii
+      if ((0 <= value) && (value <= 127)) {
+        char = String.fromCharCode(value);
+      }
+      else {
+        char = value.toString(16);
+      }
+      ret += char;
     }
     return ret;
   }
