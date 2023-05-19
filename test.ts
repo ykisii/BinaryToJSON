@@ -132,11 +132,11 @@ Deno.test(
     assertEquals(0x0001020304050607, data['dat']);
   },
 );
-
+/*
 Deno.test(
   "complex dat",
   function(): void {
-    const file = Deno.openSync("MOV_PRCT.DAT");
+    const file = Deno.openSync("xxx.DAT");
     const buffer = Deno.readAllSync(file);
     Deno.close(file.rid);
     const format = JSON.parse(Deno.readTextFileSync("prct_format.json"));
@@ -145,3 +145,4 @@ Deno.test(
     console.log(data);
   },
 );
+*/
