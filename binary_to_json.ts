@@ -99,7 +99,13 @@ export class BinaryToJSON {
   }
 
   private getString(br: BinaryReader, length: number): string {
-    return "hoge";
+    let ret: string = "";
+    for (let i = 0; i < length; i++) {
+
+      const v = String.fromCharCode(br.readBytes(1)[0]);
+      ret += v;
+    }
+    return ret;
   }
 
   private convolutionBytes(bytes: any): number {
