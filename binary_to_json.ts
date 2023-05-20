@@ -88,7 +88,7 @@ export class BinaryToJSON {
     const surplusLength = length >= 4 ? length - 4 : 0;
     let val = 0;
     if (length >= 4) {
-      val = br.readUint32();
+      val = br.readUint32(this.#littlEndian);
     }
     else {
       const bytes = br.readBytes(length);
