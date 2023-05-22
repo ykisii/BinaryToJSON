@@ -63,7 +63,7 @@ export class BinaryToJSON {
 
   private getValue(br: BinaryReader, format:{}) : number | null | string {
     const [key, val] = Object.entries(format)[0];
-    if (key === "__reserve") {
+    if (key === "__reserve" || key === "__skip") {
       br.seek(br.position + Number(val));
       return null;
     }

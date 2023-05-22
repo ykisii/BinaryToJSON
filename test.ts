@@ -132,17 +132,34 @@ Deno.test(
     assertEquals(0x0001020304050607, data['dat']);
   },
 );
-/*
 Deno.test(
   "complex dat",
   function(): void {
-    const file = Deno.openSync("xxx.DAT");
+    /*
+    const file = Deno.openSync("XXX.DAT");
     const buffer = Deno.readAllSync(file);
     Deno.close(file.rid);
     const format = JSON.parse(Deno.readTextFileSync("prct_format.json"));
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(buffer, format);
-    console.log(data);
+    //console.log(data);
+    */
   },
 );
-*/
+
+Deno.test(
+  "skip bytes",
+  function(): void {
+    const buffer = new ArrayBuffer(4);
+    const arry = new Uint8Array(buffer);
+    arry[0] = 0x0D;
+    arry[1] = 0x0C;
+    arry[2] = 0x0B;
+    arry[3] = 0x0A;
+    const format = [{"__skip":2},{"dat":2}];
+    const b2j = new BinaryToJSON();
+    const data: any = b2j.convert(arry, format);
+    console.log(data);
+    assertEquals(0x0B0A, data['dat']);
+  },
+);
