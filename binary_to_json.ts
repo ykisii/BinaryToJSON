@@ -1,3 +1,4 @@
+// Copyright 2023 @ykisii. All rights reserved. MIT license.
 import { BinaryReader } from "https://deno.land/x/binary_reader@v0.1.6/mod.ts";
 
 type Obj = {
