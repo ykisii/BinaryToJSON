@@ -60,7 +60,7 @@ Deno.test(
     const format = [{"dat":4}];
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(arry, format, true);
-    console.log(data);
+    console.log("0x" + data['dat'].toString(16));
     assertEquals(0x0A0B0C0D, data['dat']);
   },
 );
@@ -77,7 +77,7 @@ Deno.test(
     const format = [{"dat":4}];
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(arry, format);
-    console.log(data);
+    console.log("0x" + data['dat'].toString(16));
     assertEquals(0x00010203, data['dat']);
   },
 );
@@ -107,7 +107,7 @@ Deno.test(
     const format = [{"dat":5}];
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(arry, format);
-    console.log(data);
+    console.log("0x" + data['dat'].toString(16));
     assertEquals(0x0001020304, data['dat']);
   },
 );
@@ -128,7 +128,7 @@ Deno.test(
     const format = [{"dat":8}];
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(arry, format);
-    console.log(data);
+    console.log("0x" + data['dat'].toString(16));
     assertEquals(0x0001020304050607, data['dat']);
   },
 );
@@ -159,7 +159,7 @@ Deno.test(
     const format = [{"__skip":2},{"dat":2}];
     const b2j = new BinaryToJSON();
     const data: any = b2j.convert(arry, format);
-    console.log(data);
+    console.log("0x" + data['dat'].toString(16));
     assertEquals(0x0B0A, data['dat']);
   },
 );
