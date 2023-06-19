@@ -8,7 +8,7 @@ This module depends on https://deno.land/x/binary_reader@v0.1.6/mod.ts .
 
 ## Usage
 ```typescript
-import { BinaryToJSON } from "https://deno.land/x/binary_to_json@v0.1.0/mod.ts";
+import { BinaryToJSON } from "https://deno.land/x/binary_to_json/mod.ts";
 
 const buffer = new ArrayBuffer(4);
 const arry = new Uint8Array(buffer);
